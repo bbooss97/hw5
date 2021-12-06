@@ -4,12 +4,12 @@ from decimal import *
 from matplotlib import pyplot as plt
 from scipy.interpolate import lagrange
 from numpy.polynomial.polynomial import Polynomial
-getcontext().prec=10000
-maxRandomCoefficients =1000000
+getcontext().prec=10**5
+maxRandomCoefficients =10*6
 
 
 def drawFunction(coefficients):
-    size=1**100
+    size=10**10
     x=np.linspace(-size,size)
     y=[]
     for i in range(len(x)):
@@ -34,7 +34,7 @@ def createShards(k,n,s,draw):
         shards.append((x,y))
     if draw==True:
         drawFunction(coefficients)
-        
+    print(coefficients)    
 
     return shards
 
