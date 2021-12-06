@@ -5,17 +5,17 @@ from matplotlib import pyplot as plt
 from scipy.interpolate import lagrange
 from numpy.polynomial.polynomial import Polynomial
 getcontext().prec = 10**5
-maxRandomCoefficients = 10*5
+maxRandomCoefficients = 10**5
 
 
 def drawFunction(coefficients):
     size = 1000000
-    x = np.linspace(-size, size,1000000)
+    x = np.linspace(-size, size,1000)
     y=np.polyval(coefficients[::-1],x)
     plt.plot(x, y)
     plt.grid()
-    plt.axhline(y=0, color='r')
-    plt.axvline(x=0, color='r')
+    plt.axhline(color='r')
+    plt.axvline( color='r')
     plt.show()
 
 
@@ -60,9 +60,9 @@ def findSecrett(shards, k):
 
 
 if __name__ == "__main__":
-    k = 5
-    n = 5
-    s = 3471
+    k = 100
+    n = 1000
+    s = 10000
     draw = True
     shards = createShards(k, n, s, draw)
     print(findSecrett(shards, k))
