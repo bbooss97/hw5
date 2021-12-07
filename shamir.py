@@ -4,14 +4,20 @@ from decimal import *
 from matplotlib import pyplot as plt
 from scipy.interpolate import lagrange
 from numpy.polynomial.polynomial import Polynomial
-getcontext().prec = 10**5
+getcontext().prec = 10**4
 maxRandomCoefficients = 10**5
 
 
 def drawFunction(coefficients):
-    size = 1000000
-    x = np.linspace(-size, size,1000)
-    y=np.polyval(coefficients[::-1],x)
+    size = 10000
+    x = np.linspace(-size, size,10000)
+
+    y=[]
+    for i in range(len(x)):
+        sum=0
+        for j in range(len(coefficients)):
+            sum+=(x[i]**j)*coefficients[j]
+        y.append(sum)
     plt.plot(x, y)
     plt.grid()
     plt.axhline(color='r')
@@ -23,6 +29,7 @@ def createShards(k, n, s, draw):
     g=0
     coefficients =[r.randint(0, maxRandomCoefficients) for i in range(k)]
     coefficients[0] = s
+    print("those are the coefficients from 0 to k-1")
     print(coefficients)
     shards = []
     for i in range(n):
@@ -36,6 +43,7 @@ def createShards(k, n, s, draw):
         for j in range(k):
             y += (x**j)*coefficients[j]
         shards.append((x, y))
+    print("shards are generated")
     if draw == True:
         drawFunction(coefficients)
     return shards
@@ -60,9 +68,9 @@ def findSecrett(shards, k):
 
 
 if __name__ == "__main__":
-    k = 100
-    n = 1000
-    s = 10000
+    k = 5
+    n = 10
+    s = 542389543789
     draw = True
     shards = createShards(k, n, s, draw)
     print(findSecrett(shards, k))
