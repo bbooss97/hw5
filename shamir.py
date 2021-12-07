@@ -8,7 +8,7 @@ getcontext().prec = 10**4
 maxRandomCoefficients = 10**5
 
 
-def drawFunction(coefficients):
+def drawFromCoefficients(coefficients):
     size = 10000
     x = np.linspace(-size, size,10000)
 
@@ -24,6 +24,13 @@ def drawFunction(coefficients):
     plt.axvline( color='r')
     plt.show()
 
+def drawFromShards(shards,k):
+    x=np.array([i[0]for i in shards ],dtype="float64")
+    y=np.array([i[1]for i in shards],dtype="float64")
+
+    coefficients=np.polynomial.Polynomial.fit(x, y, k)
+    coefficients=[i.round(0) for i in coefficients]
+    drawFromCoefficients(coefficients)
 
 def createShards(k, n, s, draw):
     g=0
@@ -45,7 +52,7 @@ def createShards(k, n, s, draw):
         shards.append((x, y))
     print("shards are generated")
     if draw == True:
-        drawFunction(coefficients)
+        drawFromCoefficients(coefficients)
     return shards
 
 
@@ -67,15 +74,6 @@ def findSecrett(shards, k):
     return round(Decimal(secret))
 
 
-if __name__ == "__main__":
-    k = 5
-    n = 10
-    s = 542389543789
-    draw = True
-    shards = createShards(k, n, s, draw)
-    print(findSecrett(shards, k))
-
-
 # def findSecret(shards,k):
 #     if len(shards)<k:
 #         print("you need more shards")
@@ -91,6 +89,18 @@ if __name__ == "__main__":
 #     a=[[Decimal(i) for i in a[j]]for j in range(k)]
 #     b=[Decimal(i) for i in b]
 
-#     a=np.asarray(a)
-#     b=np.asarray(b)
+#     a=np.asarray(a,dtype="float64")
+#     b=np.asarray(b,dtype="float64")
 #     return np.linalg.solve(a,b)
+
+
+if __name__ == "__main__":
+    k = 5
+    n = 10
+    s = 5423789
+    draw = True
+    shards = createShards(k, n, s, draw)
+    print(findSecrett(shards, k))
+    drawFromShards(shards,k)
+ 
+
