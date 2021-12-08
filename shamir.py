@@ -2,7 +2,6 @@ import random as r
 import numpy as np
 from decimal import *
 from matplotlib import pyplot as plt
-from scipy.interpolate import lagrange
 from numpy.polynomial.polynomial import Polynomial
 getcontext().prec = 10**4
 maxRandomCoefficients = 10**5
@@ -11,7 +10,6 @@ maxRandomCoefficients = 10**5
 def drawFromCoefficients(coefficients):
     size = 10000
     x = np.linspace(-size, size,10000)
-
     y=[]
     for i in range(len(x)):
         sum=0
@@ -24,6 +22,7 @@ def drawFromCoefficients(coefficients):
     plt.axvline( color='r')
     plt.show()
 
+
 def drawFromShards(shards,k):
     x=np.array([i[0]for i in shards ],dtype="float64")
     y=np.array([i[1]for i in shards],dtype="float64")
@@ -31,6 +30,7 @@ def drawFromShards(shards,k):
     coefficients=np.polynomial.Polynomial.fit(x, y, k)
     coefficients=[i.round(0) for i in coefficients]
     drawFromCoefficients(coefficients)
+
 
 def createShards(k, n, s, draw):
     g=0
@@ -56,7 +56,7 @@ def createShards(k, n, s, draw):
     return shards
 
 
-def findSecrett(shards, k):
+def findSecret(shards, k):
     if len(shards) < k:
         print("you need more shards")
         return -1
@@ -74,33 +74,13 @@ def findSecrett(shards, k):
     return round(Decimal(secret))
 
 
-# def findSecret(shards,k):
-#     if len(shards)<k:
-#         print("you need more shards")
-#         return -1
-#     a=[[0 for j in range(k)] for i in range(k)]
-#     b=[0 for i in range(k)]
-#     for i in range(k):
-#         x=shards[i][0]
-#         y=shards[i][1]
-#         b[i]=y
-#         for j in range(k):
-#             a[i][j]=x**j
-#     a=[[Decimal(i) for i in a[j]]for j in range(k)]
-#     b=[Decimal(i) for i in b]
-
-#     a=np.asarray(a,dtype="float64")
-#     b=np.asarray(b,dtype="float64")
-#     return np.linalg.solve(a,b)
-
-
 if __name__ == "__main__":
     k = 5
     n = 10
     s = 5423789
     draw = True
     shards = createShards(k, n, s, draw)
-    print(findSecrett(shards, k))
+    print(findSecret(shards, k))
     drawFromShards(shards,k)
  
 
